@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts'
 import { useCountSellerViewsPerDayControllerHandle } from '../../../api/metrics/metrics'
-import 'dayjs/locale/pt-BR'
+import 'dayjs/locale/pt-br'
 import dayjs from 'dayjs'
 
 dayjs.locale('pt-BR')
