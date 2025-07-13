@@ -1,0 +1,1698 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/sellers": {
+      "post": {
+        "operationId": "RegisterSellerController_handle",
+        "summary": "Create a new seller",
+        "parameters": [
+          
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSellerBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The record has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSellerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The avatar was not found."
+          },
+          "409": {
+            "description": "The email or phone already exists."
+          }
+        },
+        "tags": [
+          "Sellers"
+        ]
+      }
+    },
+    "/sellers/me": {
+      "get": {
+        "operationId": "SellerProfileController_handle",
+        "summary": "Get the seller profile",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The seller profile was successfully found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sellers"
+        ]
+      }
+    },
+    "/sellers/metrics/products/sold": {
+      "get": {
+        "operationId": "CountSellerSoldProductsController_handle",
+        "summary": "Count the number of products sold by the seller in 30 days",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The amount of products sold by the seller in 30 days",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AmountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller was not found."
+          }
+        },
+        "tags": [
+          "Metrics"
+        ]
+      }
+    },
+    "/sellers/metrics/products/available": {
+      "get": {
+        "operationId": "CountSellerAvailableProductsController_handle",
+        "summary": "Count the amount of available products in 30 days.",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The amount of available products in 30 days.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AmountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller was not found."
+          }
+        },
+        "tags": [
+          "Metrics"
+        ]
+      }
+    },
+    "/sellers/metrics/views": {
+      "get": {
+        "operationId": "CountSellerViewsController_handle",
+        "summary": "Count the number of views received by the seller in 30 days",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The amount of views received by the seller in 30 days.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AmountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller was not found."
+          }
+        },
+        "tags": [
+          "Metrics"
+        ]
+      }
+    },
+    "/sellers/metrics/views/days": {
+      "get": {
+        "operationId": "CountSellerViewsPerDayController_handle",
+        "summary": "Count the number of views per day received by the seller in 30 days",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The amount of views per day received by the seller in 30 days.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewsPerDayResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller was not found."
+          }
+        },
+        "tags": [
+          "Metrics"
+        ]
+      }
+    },
+    "/sellers/sessions": {
+      "post": {
+        "operationId": "AuthenticateSellerController_handle",
+        "summary": "Get the seller access token",
+        "parameters": [
+          
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateSellerBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The seller access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateSellerResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid credentials."
+          }
+        },
+        "tags": [
+          "Sessions"
+        ]
+      }
+    },
+    "/sign-out": {
+      "post": {
+        "operationId": "SignOutController_handle",
+        "summary": "Sign out",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "The user was successfully signed out."
+          }
+        },
+        "tags": [
+          "Sessions"
+        ]
+      }
+    },
+    "/products/me": {
+      "get": {
+        "operationId": "ListAllSellerProductsController_handle",
+        "summary": "List all products from the seller",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "available",
+                "sold",
+                "cancelled"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All products were successfully found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAllSellerProductsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller was not found."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products": {
+      "post": {
+        "operationId": "SellProductController_handle",
+        "summary": "Create a product to sell",
+        "parameters": [
+          
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The product was successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProductResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The seller, category or attachments were not found."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      },
+      "get": {
+        "operationId": "ListAllProductsController_handle",
+        "summary": "List all products",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "example": 1,
+            "schema": {
+              
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "available",
+                "sold",
+                "cancelled"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All products were successfully found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAllProductsResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "GetProductController_handle",
+        "summary": "Get a product by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The product id",
+            "schema": {
+              "type": "string (uuid)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The product was successfully found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The product was not found."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      },
+      "put": {
+        "operationId": "EditProductController_handle",
+        "summary": "Edit a product",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The product id",
+            "schema": {
+              "type": "string (uuid)"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The product was successfully edited.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProductResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are not the owner of this product or the product is sold."
+          },
+          "404": {
+            "description": "The product was not found."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products/{id}/{status}": {
+      "patch": {
+        "operationId": "ChangeProductStatusController_handle",
+        "summary": "Change the product status",
+        "parameters": [
+          {
+            "name": "status",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "available",
+                "cancelled",
+                "sold"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The product id",
+            "schema": {
+              "type": "string (uuid)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The product status was successfully changed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeProductStatusResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The product does not belong to the seller or the product is with the same status."
+          },
+          "404": {
+            "description": "The product was not found."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products/{id}/views": {
+      "post": {
+        "operationId": "RegisterViewController_handle",
+        "summary": "Register a view on a product",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The product id",
+            "schema": {
+              "type": "string (uuid)"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The view was successfully registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterViewResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The viewer is the owner of the product."
+          },
+          "404": {
+            "description": "The product or viewer was not found."
+          }
+        },
+        "tags": [
+          "Viewers"
+        ]
+      }
+    },
+    "/categories": {
+      "get": {
+        "operationId": "ListAllCategoriesController_handle",
+        "summary": "List all categories",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "All categories were successfully found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAllCategoriesResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Categories"
+        ]
+      }
+    },
+    "/attachments": {
+      "post": {
+        "operationId": "UploadAttachmentsController_handle",
+        "summary": "Upload attachments",
+        "parameters": [
+          
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                },
+                "$ref": "#/components/schemas/"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The attachments were successfully uploaded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadAttachmentsResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Attachments"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "MBA Marketplace API",
+    "description": "API to manage MBA Marketplace",
+    "version": "1.0",
+    "contact": {
+      
+    }
+  },
+  "tags": [
+    
+  ],
+  "servers": [
+    
+  ],
+  "components": {
+    "schemas": {
+      "CreateSellerBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "description": "Unique",
+            "type": "string"
+          },
+          "email": {
+            "description": "Unique",
+            "type": "string",
+            "format": "email"
+          },
+          "avatarId": {
+            "description": "Created in POST - /attachments",
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirmation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "phone",
+          "email",
+          "avatarId",
+          "password",
+          "passwordConfirmation"
+        ]
+      },
+      "CreateSellerResponse": {
+        "type": "object",
+        "properties": {
+          "seller": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "avatar": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "url"
+                ],
+                "nullable": true
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "phone",
+              "email",
+              "avatar"
+            ]
+          }
+        },
+        "required": [
+          "seller"
+        ]
+      },
+      "SellerProfileResponse": {
+        "type": "object",
+        "properties": {
+          "seller": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "avatar": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "url"
+                ],
+                "nullable": true
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "phone",
+              "email",
+              "avatar"
+            ]
+          }
+        },
+        "required": [
+          "seller"
+        ]
+      },
+      "AmountResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "amount"
+        ]
+      },
+      "ViewsPerDayResponse": {
+        "type": "object",
+        "properties": {
+          "viewsPerDay": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  
+                },
+                "amount": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "date",
+                "amount"
+              ]
+            }
+          }
+        },
+        "required": [
+          "viewsPerDay"
+        ]
+      },
+      "AuthenticateSellerBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AuthenticateSellerResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "ListAllSellerProductsResponse": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "priceInCents": {
+                  "type": "number"
+                },
+                "owner": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "avatar": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "url"
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "phone",
+                    "email",
+                    "avatar"
+                  ]
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "slug"
+                  ]
+                },
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "description",
+                "priceInCents",
+                "owner",
+                "category",
+                "attachments"
+              ]
+            }
+          }
+        },
+        "required": [
+          "products"
+        ]
+      },
+      "CreateProductBody": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priceInCents": {
+            "type": "number"
+          },
+          "attachmentsIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "categoryId",
+          "description",
+          "priceInCents",
+          "attachmentsIds"
+        ]
+      },
+      "CreateProductResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priceInCents": {
+                "type": "number"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "avatar": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ],
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "phone",
+                  "email",
+                  "avatar"
+                ]
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "slug"
+                ]
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "url"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "priceInCents",
+              "owner",
+              "category",
+              "attachments"
+            ]
+          }
+        },
+        "required": [
+          "product"
+        ]
+      },
+      "ListAllProductsResponse": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "priceInCents": {
+                  "type": "number"
+                },
+                "owner": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "avatar": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "url"
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "phone",
+                    "email",
+                    "avatar"
+                  ]
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "slug"
+                  ]
+                },
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "description",
+                "priceInCents",
+                "owner",
+                "category",
+                "attachments"
+              ]
+            }
+          }
+        },
+        "required": [
+          "products"
+        ]
+      },
+      "GetProductResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priceInCents": {
+                "type": "number"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "avatar": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ],
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "phone",
+                  "email",
+                  "avatar"
+                ]
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "slug"
+                ]
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "url"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "priceInCents",
+              "owner",
+              "category",
+              "attachments"
+            ]
+          }
+        },
+        "required": [
+          "product"
+        ]
+      },
+      "CreateProductRequestBody": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priceInCents": {
+            "type": "number"
+          },
+          "attachmentsIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "categoryId",
+          "description",
+          "priceInCents",
+          "attachmentsIds"
+        ]
+      },
+      "ChangeProductStatusResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priceInCents": {
+                "type": "number"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "avatar": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ],
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "phone",
+                  "email",
+                  "avatar"
+                ]
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "slug"
+                ]
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "url"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "priceInCents",
+              "owner",
+              "category",
+              "attachments"
+            ]
+          }
+        },
+        "required": [
+          "product"
+        ]
+      },
+      "RegisterViewResponse": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "priceInCents": {
+                "type": "number"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "avatar": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "url"
+                    ],
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "phone",
+                  "email",
+                  "avatar"
+                ]
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "slug"
+                ]
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "url"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "priceInCents",
+              "owner",
+              "category",
+              "attachments"
+            ]
+          },
+          "viewer": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "avatar": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "url"
+                ],
+                "nullable": true
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "phone",
+              "email",
+              "avatar"
+            ]
+          }
+        },
+        "required": [
+          "product",
+          "viewer"
+        ]
+      },
+      "ListAllCategoriesResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "slug"
+              ]
+            }
+          }
+        },
+        "required": [
+          "categories"
+        ]
+      },
+      "UploadAttachmentsResponse": {
+        "type": "object",
+        "properties": {
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "url"
+              ]
+            }
+          }
+        },
+        "required": [
+          "attachments"
+        ]
+      }
+    }
+  }
+}
